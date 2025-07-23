@@ -16,7 +16,7 @@ static void	push(t_list **stack_src, t_list **stack_dest)
 {
 	t_list	*temp;
 
-	if (!stack_src)
+	if (!stack_src || !*stack_src)
 		return ;
 	temp = *stack_src;
 	*stack_src = (*stack_src)->next;

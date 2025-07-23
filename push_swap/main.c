@@ -110,7 +110,9 @@ int	main(int argc, char **argv)
 	if (!correct_input(argv, stack_size))
 		ft_error(argv, NULL, NULL, argc);
 	stack_a = fill_list(argv, stack_size, argc);
+	print_list(stack_a);
 	choose_sort(stack_a, stack_b, stack_size);
+	print_list(stack_a);
 	free_stack(stack_a);
 	free_stack(stack_b);
 	if (argc == 2)

@@ -21,7 +21,7 @@ CFLAGS = -Wall -Wextra -Werror
 
 # files
 
-SRCS = main.c fill.c push.c reverse_rotate.c split.c error_free.c order.c rotate.c swap.c sort.c
+SRCS = main.c fill.c push.c reverse_rotate.c split.c error_free.c order.c rotate.c swap.c sort.c sort_functions.c
 
 OBJS = $(SRCS:.c=.o)
 
