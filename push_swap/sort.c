@@ -6,7 +6,7 @@
 /*   By: ljessica <ljessica@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 09:38:12 by ljessica          #+#    #+#             */
-/*   Updated: 2025/07/23 13:12:11 by ljessica         ###   ########.fr       */
+/*   Updated: 2025/07/30 10:11:05 by ljessica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,7 @@ static void	sort_four_five(t_list *stack_a, t_list *stack_b, int stack_size)
 		min_to_b(&stack_a, &stack_b);
 		min_to_b(&stack_a, &stack_b);
 		sort_three(stack_a);
-		print_list(stack_a);
 		pa(&stack_a, &stack_b);
-		print_list(stack_b);
 		pa(&stack_a, &stack_b);
 	}
 }

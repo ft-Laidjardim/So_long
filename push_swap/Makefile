@@ -6,7 +6,7 @@
 #    By: ljessica <ljessica@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/23 09:06:46 by ljessica          #+#    #+#              #
-#    Updated: 2025/07/23 12:42:40 by ljessica         ###   ########.fr        #
+#    Updated: 2025/07/24 10:46:53 by ljessica         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ NAME = push_swap
 # Compiler
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 
 # files
 

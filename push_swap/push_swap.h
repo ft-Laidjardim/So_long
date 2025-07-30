@@ -6,7 +6,7 @@
 /*   By: ljessica <ljessica@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/10 11:19:26 by ljessica          #+#    #+#             */
-/*   Updated: 2025/07/23 12:41:31 by ljessica         ###   ########.fr       */
+/*   Updated: 2025/07/24 13:13:20 by ljessica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 typedef struct s_list
 {
 	int				content;
+	int				index;
 	struct s_list	*next;
 }	t_list;
 
@@ -57,6 +58,7 @@ int		main(int argc, char **argv);
 // parce and stacks
 t_list	*fill_list(char **argv, int count, int argc);
 char	**ft_split(char *str);
+void	find_index(t_list **stack_a);
 
 // sorting
 void	choose_sort(t_list *stack_a, t_list *stack_b, int stack_size);
