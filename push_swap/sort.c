@@ -6,7 +6,7 @@
 /*   By: ljessica <ljessica@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 09:38:12 by ljessica          #+#    #+#             */
-/*   Updated: 2025/07/30 10:11:05 by ljessica         ###   ########.fr       */
+/*   Updated: 2025/07/30 18:17:46 by ljessica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,38 @@ static void	sort_four_five(t_list *stack_a, t_list *stack_b, int stack_size)
 		sort_three(stack_a);
 		pa(&stack_a, &stack_b);
 	}
-	else if(stack_size == 5)
+	else if (stack_size == 5)
 	{
 		min_to_b(&stack_a, &stack_b);
 		min_to_b(&stack_a, &stack_b);
 		sort_three(stack_a);
 		pa(&stack_a, &stack_b);
 		pa(&stack_a, &stack_b);
+	}
+}
+
+static void	radix_sort(t_list *stack_a, t_list *stack_b)
+{
+	int	len;
+	int	i;
+
+	find_index(&stack_a);
+	i = 0;
+	while (!is_ordened(stack_a))
+	{
+		len = ft_lstsize(stack_a);
+		while (len--)
+		{
+			if ((stack_a->index >> i) & 1)
+				ra(&stack_a);
+			else
+				pb(&stack_b, &stack_a);
+		}
+		while (stack_b)
+		{
+			pa(&stack_a, &stack_b);
+		}
+		i++;
 	}
 }
 
@@ -64,10 +89,12 @@ void	choose_sort(t_list *stack_a, t_list *stack_b, int stack_size)
 		sa(stack_a);
 	if (stack_size == 3 && !is_ordened(stack_a))
 		sort_three(stack_a);
-	if ((stack_size == 4 || stack_size == 5 )&& !is_ordened(stack_a))
+	//printf("%s:\n", "stack_a");
+	//print_list(stack_a);
+	//printf("%s:\n", "stack_b");
+	//print_list(stack_b);
+	if ((stack_size == 4 || stack_size == 5) && !is_ordened(stack_a))
 		sort_four_five(stack_a, stack_b, stack_size);
-	if (stack_size == 10 && !is_ordened(stack_a))
-		write(1, "Crie a funcao sort_ten\n", 23);
 	if (stack_size > 5 && !is_ordened(stack_a))
-		write(1, "Crie a funcao sorth_four\n", 25);
+		radix_sort(stack_a, stack_b);
 }

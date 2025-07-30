@@ -6,7 +6,7 @@
 /*   By: ljessica <ljessica@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/10 11:19:26 by ljessica          #+#    #+#             */
-/*   Updated: 2025/07/24 13:13:20 by ljessica         ###   ########.fr       */
+/*   Updated: 2025/07/30 18:13:33 by ljessica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ long	ft_atol(char *str);
 int		is_valid(char *str);
 int		correct_input(char **str, int count);
 int		is_ordened(t_list *stack);
+int		ft_lstsize(t_list *lst);
 
 // movement functions
 void	pa(t_list **stack_a, t_list **stack_b);
@@ -49,8 +50,14 @@ void	ss(t_list *stack_a, t_list *stack_b);
 void	free_split(char **split);
 void	free_stack(t_list *stack);
 
+
 // errors
 void	ft_error(char **args, t_list *a, t_list *b, int argc);
+void	dummy_del(void *content);
+void	ft_lstclear(t_list **lst, void (*del)(void*));
+void	ft_lstdelone(t_list *lst, void (*del)(void*));
+
+
 
 // main
 int		main(int argc, char **argv);
@@ -63,6 +70,6 @@ void	find_index(t_list **stack_a);
 // sorting
 void	choose_sort(t_list *stack_a, t_list *stack_b, int stack_size);
 int		find_min(t_list *stack);
-void    min_to_b(t_list **stack_a, t_list **stack_b);
+void	min_to_b(t_list **stack_a, t_list **stack_b);
 void	print_list(t_list *stack);
 #endif

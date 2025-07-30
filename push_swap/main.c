@@ -6,7 +6,7 @@
 /*   By: ljessica <ljessica@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 14:47:55 by ljessica          #+#    #+#             */
-/*   Updated: 2025/07/24 13:13:45 by ljessica         ###   ########.fr       */
+/*   Updated: 2025/07/30 18:17:57 by ljessica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,10 +110,12 @@ int	main(int argc, char **argv)
 	if (!correct_input(argv, stack_size))
 		ft_error(argv, NULL, NULL, argc);
 	stack_a = fill_list(argv, stack_size, argc);
-	find_index(&stack_a);
 	choose_sort(stack_a, stack_b, stack_size);
+	//print_list(stack_a);
+	//print_list(stack_b);
 	free_stack(stack_a);
 	free_stack(stack_b);
 	if (argc == 2)
 		free_split(argv);
+	return (0);
 }

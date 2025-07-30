@@ -6,7 +6,7 @@
 /*   By: ljessica <ljessica@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/10 15:49:39 by ljessica          #+#    #+#             */
-/*   Updated: 2025/07/23 12:34:45 by ljessica         ###   ########.fr       */
+/*   Updated: 2025/07/30 18:19:16 by ljessica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,6 @@ t_list	*fill_list(char **argv, int count, int argc)
 		ft_lstadd_back(&stack, new_node);
 		i++;
 	}
+	//print_list(stack);
 	return (stack);
 }

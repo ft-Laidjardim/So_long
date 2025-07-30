@@ -6,7 +6,7 @@
 /*   By: ljessica <ljessica@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 15:32:42 by ljessica          #+#    #+#             */
-/*   Updated: 2025/07/23 12:36:10 by ljessica         ###   ########.fr       */
+/*   Updated: 2025/07/30 18:09:26 by ljessica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,21 @@
 static void	reverse_rotate(t_list **stack)
 {
 	t_list	*first;
-	t_list	*temp;
+	t_list	*last;
 	t_list	*before_last;
 
 	if (!stack || !*stack || !(*stack)->next)
 		return ;
-	temp = *stack;
 	first = *stack;
-	while (first->next)
-		first = first->next;
+	last = *stack;
+	while (last->next)
+		last = last->next;
 	before_last = *stack;
-	while (before_last && before_last->next->next)
+	while (before_last->next && before_last->next->next)
 		before_last = before_last->next;
-	*stack = first;
-	(*stack)->next = temp;
 	before_last->next = NULL;
+	last->next = first;
+	*stack = last;
 }
 
 void	rra(t_list **stack_a)
