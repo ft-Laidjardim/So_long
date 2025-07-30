@@ -12,89 +12,94 @@
 
 #include "push_swap.h"
 
-static void	sort_three(t_list *stack_a)
+static void	sort_three(t_list **stack_a)
 {
 	int	first;
 	int	second;
 	int	third;
 
-	first = stack_a->content;
-	second = stack_a->next->content;
-	third = stack_a->next->next->content;
+	first = (*stack_a)->content;
+	second = (*stack_a)->next->content;
+	third = (*stack_a)->next->next->content;
 	if (first > second && second < third && first < third)
-		sa(stack_a);
+		sa(*stack_a);
 	if (first > second && second < third && first > third)
-		ra(&stack_a);
+		ra(stack_a);
 	if (first > second && second > third)
 	{
-		sa(stack_a);
-		rra(&stack_a);
+		sa(*stack_a);
+		rra(stack_a);
 	}
 	if (first < second && second > third && first < third)
 	{
-		sa(stack_a);
-		ra(&stack_a);
+		sa(*stack_a);
+		ra(stack_a);
 	}
 	if (first < second && second > third && first > third)
-		rra(&stack_a);
+		rra(stack_a);
 }
 
-static void	sort_four_five(t_list *stack_a, t_list *stack_b, int stack_size)
+static void sort_four_five(t_list **stack_a, t_list **stack_b, int stack_size)
 {
-	if (stack_size == 4)
-	{
-		min_to_b(&stack_a, &stack_b);
-		sort_three(stack_a);
-		pa(&stack_a, &stack_b);
-	}
-	else if (stack_size == 5)
-	{
-		min_to_b(&stack_a, &stack_b);
-		min_to_b(&stack_a, &stack_b);
-		sort_three(stack_a);
-		pa(&stack_a, &stack_b);
-		pa(&stack_a, &stack_b);
-	}
+    if (stack_size == 4)
+    {
+        min_to_b(stack_a, stack_b);
+        sort_three(stack_a);
+        pa(stack_a, stack_b);
+    }
+    else if (stack_size == 5)
+    {
+        min_to_b(stack_a, stack_b);
+        min_to_b(stack_a, stack_b);
+        sort_three(stack_a);
+        pa(stack_a, stack_b);
+        pa(stack_a, stack_b);
+    }
 }
 
-static void	radix_sort(t_list *stack_a, t_list *stack_b)
+static void radix_sort(t_list **stack_a, t_list **stack_b)
 {
 	int	len;
 	int	i;
 
-	find_index(&stack_a);
+	find_index(stack_a); // stack_a como t_list**
+
 	i = 0;
-	while (!is_ordened(stack_a))
+	while (!is_ordened(*stack_a))
 	{
-		len = ft_lstsize(stack_a);
+		len = ft_lstsize(*stack_a);
 		while (len--)
 		{
-			if ((stack_a->index >> i) & 1)
-				ra(&stack_a);
+			if (((*stack_a)->index >> i) & 1)
+				ra(stack_a);
 			else
-				pb(&stack_b, &stack_a);
+				pb(stack_b, stack_a);
 		}
-		while (stack_b)
+		while (*stack_b)
 		{
-			pa(&stack_a, &stack_b);
+			pa(stack_a, stack_b);
 		}
 		i++;
 	}
 }
 
-void	choose_sort(t_list *stack_a, t_list *stack_b, int stack_size)
+void choose_sort(t_list **stack_a, t_list **stack_b, int stack_size)
 {
-	(void)stack_b;
-	if (stack_size == 2 && !is_ordened(stack_a))
-		sa(stack_a);
-	if (stack_size == 3 && !is_ordened(stack_a))
-		sort_three(stack_a);
-	//printf("%s:\n", "stack_a");
-	//print_list(stack_a);
-	//printf("%s:\n", "stack_b");
-	//print_list(stack_b);
-	if ((stack_size == 4 || stack_size == 5) && !is_ordened(stack_a))
-		sort_four_five(stack_a, stack_b, stack_size);
-	if (stack_size > 5 && !is_ordened(stack_a))
-		radix_sort(stack_a, stack_b);
+	if (stack_size == 2 && !is_ordened(*stack_a))
+		sa(*stack_a);
+
+	else if (stack_size == 3 && !is_ordened(*stack_a))
+		sort_three(stack_a);  // ✅ Correto: passa t_list**
+
+	else if ((stack_size == 4 || stack_size == 5) && !is_ordened(*stack_a))
+		sort_four_five(stack_a, stack_b, stack_size);  // ✅ t_list** para ambos
+
+	else if (stack_size > 5 && !is_ordened(*stack_a))
+		radix_sort(stack_a, stack_b);  // radix_sort ainda espera t_list*
+
+	// Para debug:
+	printf("stack_a:\n");
+	print_list(*stack_a);  // ✅ print_list espera t_list*
+	printf("stack_b:\n");
+	print_list(*stack_b);
 }

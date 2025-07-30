@@ -38,11 +38,12 @@ void	free_split(char **split)
 }
 void	print_list(t_list *stack)
 {
-	while (stack && stack->next)
+	while (stack)
 	{
-		printf("%d", stack->content);
+		printf("%d ", stack->content);
 		stack = stack->next;
 	}
+	printf("\n");
 }
 
 void	free_stack(t_list *stack)

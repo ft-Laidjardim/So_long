@@ -68,7 +68,7 @@ char	**ft_split(char *str);
 void	find_index(t_list **stack_a);
 
 // sorting
-void	choose_sort(t_list *stack_a, t_list *stack_b, int stack_size);
+void choose_sort(t_list **stack_a, t_list **stack_b, int stack_size);
 int		find_min(t_list *stack);
 void	min_to_b(t_list **stack_a, t_list **stack_b);
 void	print_list(t_list *stack);
