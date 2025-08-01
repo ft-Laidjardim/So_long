@@ -69,6 +69,5 @@ t_list	*fill_list(char **argv, int count, int argc)
 		ft_lstadd_back(&stack, new_node);
 		i++;
 	}
-	//print_list(stack);
 	return (stack);
 }

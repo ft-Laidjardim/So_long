@@ -52,7 +52,6 @@ void	free_stack(t_list *stack)
 
 	while (stack)
 	{
-		//printf("about to free: %d\n", stack->content);
 		temp = stack->next;
 		free(stack);
 		stack = temp;

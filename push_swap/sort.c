@@ -96,10 +96,4 @@ void choose_sort(t_list **stack_a, t_list **stack_b, int stack_size)
 
 	else if (stack_size > 5 && !is_ordened(*stack_a))
 		radix_sort(stack_a, stack_b);  // radix_sort ainda espera t_list*
-
-	// Para debug:
-	printf("stack_a:\n");
-	print_list(*stack_a);  // ✅ print_list espera t_list*
-	printf("stack_b:\n");
-	print_list(*stack_b);
 }

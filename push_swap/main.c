@@ -34,8 +34,6 @@ long	ft_atol(char *str)
 		result = result * 10 + (str[i] - '0');
 		i++;
 	}
-	if ((result * n) > INT_MAX || (result * n) < INT_MIN)
-		ft_error(NULL, NULL, NULL, 0);
 	return (result * n);
 }
 
@@ -67,7 +65,7 @@ int	correct_input(char **str, int count)
 	j = 0;
 	while (i < count)
 	{
-		if (!is_valid(str[i]))
+		if (!is_valid(str[i]) || ft_atol(str[i]) > INT_MAX || ft_atol(str[i]) < INT_MIN)
 			return (0);
 		i++;
 	}
@@ -91,7 +89,6 @@ int	main(int argc, char **argv)
 	t_list	*stack_a;
 	t_list	*stack_b;
 	int		stack_size;
-
 	stack_a = NULL;
 	stack_b = NULL;
 	stack_size = argc -1;
@@ -111,8 +108,6 @@ int	main(int argc, char **argv)
 		ft_error(argv, NULL, NULL, argc);
 	stack_a = fill_list(argv, stack_size, argc);
 	choose_sort(&stack_a, &stack_b, stack_size);
-	//print_list(stack_a);
-	//print_list(stack_b);
 	free_stack(stack_a);
 	free_stack(stack_b);
 	if (argc == 2)
