@@ -1,7 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ljessica <ljessica@student.42porto.com>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/07 12:21:35 by ljessica          #+#    #+#             */
+/*   Updated: 2025/08/07 12:57:01 by ljessica         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+
+#include "so_long.h"
 #include "mlx/mlx.h"
 #include <fcntl.h>
 #include <stdlib.h>
 #include "gnl.h"
+
 
 int tamanho_do_mapa(char *mapa_arquivo)
 {
@@ -20,34 +35,81 @@ int main(int argc, char **argv)
 {
     int fd;
     int i;
-    int chars_por_linha;
-    int qtd_linha_mapa;
     char **mapa;
-
-
+    t_data  my_data;
+    
     if (argc != 2)
-        return (1); //problema
-    qtd_linha_mapa = tamanho_do_mapa(argv[1]);
+        return (print_error(1));
+    my_data.filename = argv[1];
+    check_map(&my_data);
+    my_data.height = tamanho_do_mapa(argv[1]);
+    if (my_data.height <= 0)
+    {
+        printf("Erro: mapa vazio ou inválido.\n");
+        return (1);
+    }
+
+    mapa = calloc(my_data.height, sizeof(char *));
+    if (!mapa)
+    {
+        printf("Erro: malloc falhou.\n");
+        return (1);
+    }
+
     fd = open(argv[1], O_RDONLY);
+    if (fd < 0)
+    {
+        printf("Erro ao abrir o arquivo.\n");
+        return (1);
+    }
+
     i = 0;
-    mapa = calloc(qtd_linha_mapa, sizeof(char *));
-    while(i < qtd_linha_mapa)
+    while (i < my_data.height)
     {
         mapa[i] = get_next_line(fd);
+        if (!mapa[i])
+        {
+            printf("Erro ao ler linha %d do mapa.\n", i);
+            close(fd);
+            return (1);
+        }
         i++;
     }
     close(fd);
-    chars_por_linha = ft_strlen(mapa[0]) - 1;
+    my_data.map = mapa;
+    my_data.width = ft_strlen(mapa[0]) - 1; // remove o '\n'
+
+    // Remove o '\n' no final de cada linha
     i = 0;
-    while (i < qtd_linha_mapa)
+    while (i < my_data.height)
     {
-        mapa[i][chars_por_linha] = '\0';
+        if (mapa[i][my_data.width] == '\n')
+            mapa[i][my_data.width] = '\0';
         i++;
     }
+
+    // Verifica se todas as linhas têm o mesmo comprimento
     i = 0;
-    while (i < qtd_linha_mapa)
+    while (i < my_data.height)
     {
-        if (ft_strlen(mapa[i] != chars_por_linha))
-            return (0);
+        if (ft_strlen(mapa[i]) != my_data.width)
+        {
+            printf("Erro: linhas de tamanhos diferentes no mapa.\n");
+            return (1);
+        }
+        i++;
     }
+
+    printf("Mapa carregado com sucesso.\n");
+
+    // Libere a memória
+    i = 0;
+    while (i < my_data.height)
+    {
+        free(mapa[i]);
+        i++;
+    }
+    free(mapa);
+
+    return (0);
 }
