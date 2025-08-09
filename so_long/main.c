@@ -16,100 +16,93 @@
 #include <fcntl.h>
 #include <stdlib.h>
 #include "gnl.h"
+#include <stdio.h>
 
 
 int tamanho_do_mapa(char *mapa_arquivo)
 {
     int fd;
     int tamanho;
+    char *line;
 
     fd = open(mapa_arquivo, O_RDONLY);
+    if (fd < 0)
+        return 0;
+
     tamanho = 0;
-    while (get_next_line(fd))
+    line = get_next_line(fd);
+    while (line)
+    {
+        free(line);  // LIBERA A LINHA LIDA ANTES DE PEGAR A PRÓXIMA
         tamanho++;
+        line = get_next_line(fd);
+    }
     close(fd);
-    return (tamanho);//linhas 
+    return tamanho;
 }
 
 int main(int argc, char **argv)
 {
     int fd;
     int i;
-    char **mapa;
-    t_data  my_data;
-    
+    t_data my_data;
+
     if (argc != 2)
         return (print_error(1));
+
     my_data.filename = argv[1];
-    check_map(&my_data);
+
+    // Primeiro, validar extensão e existência
+    if (!has_ben_extension(my_data.filename))
+        return (print_error(2));
+    if (!map_exists(my_data.filename))
+        return (print_error(3));
+
+    // Ler mapa
     my_data.height = tamanho_do_mapa(argv[1]);
     if (my_data.height <= 0)
-    {
-        printf("Erro: mapa vazio ou inválido.\n");
-        return (1);
-    }
+        return (print_error(3));
 
-    mapa = calloc(my_data.height, sizeof(char *));
-    if (!mapa)
-    {
-        printf("Erro: malloc falhou.\n");
+    my_data.map = calloc(my_data.height + 1, sizeof(char *));
+    if (!my_data.map)
         return (1);
-    }
 
     fd = open(argv[1], O_RDONLY);
     if (fd < 0)
-    {
-        printf("Erro ao abrir o arquivo.\n");
-        return (1);
-    }
+        return (print_error(3));
 
     i = 0;
     while (i < my_data.height)
     {
-        mapa[i] = get_next_line(fd);
-        if (!mapa[i])
+        my_data.map[i] = get_next_line(fd);
+        if (!my_data.map[i])
         {
-            printf("Erro ao ler linha %d do mapa.\n", i);
-            close(fd);
+            free_map(my_data.map, i);
+            close (fd);
             return (1);
         }
+        // Remove o '\n' se houver
+        int len = ft_strlen(my_data.map[i]);
+        if (len > 0 && my_data.map[i][len - 1] == '\n')
+            my_data.map[i][len - 1] = '\0';
         i++;
     }
     close(fd);
-    my_data.map = mapa;
-    my_data.width = ft_strlen(mapa[0]) - 1; // remove o '\n'
 
-    // Remove o '\n' no final de cada linha
+    my_data.width = ft_strlen(my_data.map[0]);
+
+    // Agora valida retângulo e elementos
+    if (!check_map(&my_data))
+        return (1);
+
+    printf("Mapa carregado e verificado com sucesso.\n");
+
+    // Libera memória
     i = 0;
     while (i < my_data.height)
-    {
-        if (mapa[i][my_data.width] == '\n')
-            mapa[i][my_data.width] = '\0';
-        i++;
-    }
-
-    // Verifica se todas as linhas têm o mesmo comprimento
-    i = 0;
-    while (i < my_data.height)
-    {
-        if (ft_strlen(mapa[i]) != my_data.width)
-        {
-            printf("Erro: linhas de tamanhos diferentes no mapa.\n");
-            return (1);
-        }
-        i++;
-    }
-
-    printf("Mapa carregado com sucesso.\n");
-
-    // Libere a memória
-    i = 0;
-    while (i < my_data.height)
-    {
-        free(mapa[i]);
-        i++;
-    }
-    free(mapa);
+        free(my_data.map[i++]);
+    free(my_data.map);
 
     return (0);
 }
+

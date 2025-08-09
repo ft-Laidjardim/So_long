@@ -12,7 +12,7 @@
 char	*get_next_line(int fd);
 
 //Util functions
-int		ft_strlen(char *str);
+int		ft_strlen(const char *str);
 void	ft_getrest(char *buffer);
 char	*ft_strchr(char *buffer, char c);
 char	*ft_strjoin_free(char *line, char *buffer);

@@ -25,7 +25,15 @@ typedef struct s_game
     char    **map;
 }   t_data;
 
+// Funções de checks
+int     map_exists(const char *map_path);
+int     has_ben_extension(const char *map_name);
+int     is_rectangle(char **map, int width);
+int     check_elements(t_data *data);
+int     check_map(t_data *data);
+int     print_error(int code);
 
-
+// Funções utilitárias
+int     ft_strcmp(const char *s1, const char *s2);
 
 #endif
