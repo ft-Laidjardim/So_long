@@ -1,5 +1,5 @@
 <h1 align="center">
-	🎮 so_long
+	so_long
 </h1>
 
 <p align="center">
@@ -89,7 +89,6 @@ I added some maps if you want to test the game.
 
 You can use WASD to move UP, LEFT, DOWN or RIGHT respectively.
 To quit the game press ESC or click on the red cross of window.
-If you touch an enemy you loose the game.
 To win its necessary to pick up all collectibles and get back to the exit.
 
 **Maps**
@@ -108,7 +107,6 @@ You can use any map of your choice as long as you follow the next rules:
 |     *C*     | collectible              |
 |     *E*     | exit                     |
 |     *P*     | Player starting position |
-|     *K*     | Enemy position           |
 
 
 I added some maps if you want to test the game.
@@ -116,8 +114,3 @@ I added some maps if you want to test the game.
 - "map2.ber" is a bigger map with more collectibles.
 - "map3.ber" has some enemies for playing with the bonus minigame.
 
-
-Example of map2.ber with an enemy:
-
-
-![so_long_42](https://github.com/Surfi89/so_long/blob/main/so_long_42.png)
