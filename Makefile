@@ -1,3 +1,14 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: ljessica <ljessica@student.42porto.com>    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2025/09/08 15:30:28 by ljessica          #+#    #+#              #
+#    Updated: 2025/09/08 15:38:08 by ljessica         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
 NAME = so_long
 
@@ -27,11 +38,10 @@ CFLAGS = -Wall -Werror -Wextra -g
 MLXFLAGS = -L ./minilibx-linux -lmlx -Ilmlx -lXext -lX11 -lm 
 
 RM = rm -f
+all: $(NAME)
 
 $(NAME): $(LIBFT) $(MLIBX) $(SRCS)
 	$(CC) $(CFLAGS) $(SRCS) $(LIBFT) $(MLXFLAGS) -o $(NAME)
-
-all: $(NAME)
 
 $(LIBFT):
 	$(MAKE) -C $(LIBFT_DIR)
@@ -50,4 +60,8 @@ fclean: clean
 re: fclean
 	$(MAKE) all
 
-.PHONY: all clean fclean re
+norminette:
+	norminette ./srcs
+	norminette ./include
+	norminette ./libft
+.PHONY: all clean fclean re norminette
